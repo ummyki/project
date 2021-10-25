@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  
   <style>
     body{
       background-color: lightyellow;
@@ -24,14 +25,15 @@
       width:600px;
       margin: auto;
       text-align: center;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
     .bg--img{
-      margin: 0;
       background: url('bgimg.jpg');
       background-repeat: no-repeat;
       background-size: cover;
-      height: 100%;
-      width: 100%;
+      height: 100vh;
+      width: 100vw;
       position: absolute;
       transition: all 1s;
       opacity: 0;
@@ -39,20 +41,34 @@
     .bg__img--show{
       opacity: 1;
     }
-
     .btns{
       position: fixed;
       padding: 10px;
       background-color: transparent;
       transition: 0.3s;
     }
-
     .btns.bgshow{
       background-color: tomato;
+    }
+
+    .arrow_up.visible {
+      opacity: 1;
+    }
+    .arrow_up {
+      position: fixed;
+      bottom: 50px;
+      right: 50px;
+      width: 70px;
+      height: 70px;
+      background: none;
+      border: none;
+      text-align: center;
+      opacity: 0;
     }
   </style>
 </head>
 <body>
+  
   <div class="bg--img"></div>
   <div class="btns">
     <div class="container">
@@ -61,50 +77,71 @@
         <button class="btn--reset">배경색상 리셋</button>
         <button class="btn--bggray">배경색상변경 그레이</button>
         <button class="btn--bgimg">배경이미지</button>
+        
       </div>
     </div>
   </div>
+  <section id="home">
+    <div class="wrapper"></div>
+  </section>
+  <button class="arrow_up">
+    <img class="material-icons" src="up_icon.png" alt="">
+  </button>
+
+  
   <script>
     const bgContainer = document.querySelector('.bg--img');
     const btnToggle = document.querySelector('.btn_toggle');
     btnToggle.addEventListener('click', function() {
-      document.body.classList.toggle('bgcolor--blue');
       bgContainer.classList.remove('bg__img--show');
+      document.body.classList.toggle('bgcolor--blue');
       //console.log('버튼클릭');
     });
 
     const btnResrt = document.querySelector('.btn--reset');
     btnResrt.addEventListener('click', function () {
-      bgContainer.classList.remove('bg__img--show');
       document.body.classList.remove('bgcolor--blue', 'bgcolor--gray',
       'bg--img');
+      bgContainer.classList.remove('bg__img--show');
         });
 
     const btnBgGray = document.querySelector('.btn--bggray');
     btnBgGray.addEventListener('click', function(){
-      document.body.classList.add('bgcolor--gray');
       bgContainer.classList.remove('bg__img--show');
+      document.body.classList.add('bgcolor--gray');
     });
 
 
     const btnBgImg = document.querySelector('.btn--bgimg');
     btnBgImg.addEventListener('click', function(){
       bgContainer.classList.add('bg__img--show');
-      
     });
-    
-    
-    const navContainer = document.querySelector('.btns')
-    document.addEventListener('scroll', function () {
-    console.log(window.scrollY);
-    if(window.scrollY > 100) {
-    navContainer.classList.add('bgshow');
-    } 
-    else {
-    navContainer.classList.remove('bgshow');
-    }
 
+    const navContainer = document.querySelector('.btns')
+    document.addEventListener('scroll', function(){
+      if (window.scrollY > 100){
+        navContainer.classList.add('bgshow');
+      }else{
+        navContainer.classList.remove('bgshow');
+      }
     });
+
+    const up = document.querySelector('.arrow_up');
+    document.addEventListener('scroll', function(){
+      if (window.scrollY > 500){
+        up.classList.add('visible');
+      }else{
+        up.classList.remove('visible');
+      }
+    });
+    const home = document.querySelector('#home');
+    up.addEventListener('click', function(){
+      home.scrollIntoView({behavior:"smooth"});
+    });
+
+    
+      
+
 
   </script>
 
